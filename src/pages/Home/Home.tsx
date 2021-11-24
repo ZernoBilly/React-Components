@@ -9,7 +9,7 @@ import {
   menuItems,
   fonts,
   colors,
-} from "../../testData/testData";
+} from "../../testData/SideMenuTestData";
 
 const Home = () => {
   return (

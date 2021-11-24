@@ -1,5 +1,8 @@
 export const backgroundImage = "images/buildings.jpg";
-export const headerText = "Header";
+export const headerText = {
+  long: "Side Menu Header",
+  short: "Header", // max 7 characters
+};
 export const menuItems = [
   { name: "Home", to: "/", icon: "/icons/home.svg", subMenuItems: [] },
   { name: "About", to: "/about", icon: "/icons/badge.svg", subMenuItems: [] },
@@ -42,5 +45,8 @@ export const colors = {
   header: "white",
   menuItem: "black",
   selectedMenuItem: "white",
-  itemOnHover: "rgba(246, 112, 145)", //Sligtly different than background color
+  onHover: " #ffddcc",
+  toggleButton: "#f2f2f2",
 };
+
+export const breakPoint = "only screen and (max-width: 960px)";

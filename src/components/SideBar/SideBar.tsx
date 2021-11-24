@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import MenuItem from "./MenuItem/MenuItem";
+import ToggleButton from "./ToggleButton/ToggleButton";
 
 import { SideBarContainer, SideBarHeader, MenuItemsContainer } from "./styled";
 
@@ -16,12 +17,16 @@ interface ColorsProps {
   header: string;
   menuItem: string;
   selectedMenuItem: string;
-  itemOnHover: string;
+  onHover: string;
+  toggleButton: string;
 }
 
 type SideBarProps = {
   bgImage: string;
-  headerText: string;
+  headerText: {
+    long: string;
+    short: string;
+  };
   headerFontFamily?: string;
   iconsColor?: string;
   menuItemFontFamily?: string;
@@ -31,21 +36,50 @@ type SideBarProps = {
 
 const SideBar: React.FC<SideBarProps> = ({
   bgImage = "",
-  headerText = "",
+  headerText = {},
   headerFontFamily = "",
   menuItemFontFamily = "",
   menuItems = [],
   colors,
 }) => {
   const [selected, setSelected] = useState(menuItems[0].name);
+  const [sideMenuOpen, setSideMenuOpen] = useState(true);
+  const [showHeaderText, setShowHeaderText] = useState(headerText.long);
+
+  //Delay for long header text appearing
+  useEffect(() => {
+    sideMenuOpen
+      ? setTimeout(() => {
+          setShowHeaderText(headerText.long);
+        }, 180)
+      : setShowHeaderText(headerText.short);
+  }, [setShowHeaderText, headerText.long, headerText.short, sideMenuOpen]);
+
+  //Window width listener for opening and closing SideMenu
+  useEffect(() => {
+    const updateWindowWidth = () => {
+      if (window.innerWidth < 1080) {
+        setSideMenuOpen(false);
+      } else {
+        setSideMenuOpen(true);
+      }
+    };
+    window.addEventListener("resize", updateWindowWidth);
+
+    return () => window.removeEventListener("resize", updateWindowWidth);
+  }, []);
 
   return (
-    <SideBarContainer bgImage={bgImage} bgColor={colors.background}>
+    <SideBarContainer
+      bgImage={bgImage}
+      bgColor={colors.background}
+      sideMenuOpen={sideMenuOpen}
+    >
       <SideBarHeader
         headerColor={colors.header}
         headerFontFamily={headerFontFamily}
       >
-        {headerText}
+        {showHeaderText}
       </SideBarHeader>
       <MenuItemsContainer>
         {menuItems.map((item: IMenuItem) => (
@@ -58,10 +92,17 @@ const SideBar: React.FC<SideBarProps> = ({
             dividerColor={colors.background}
             menuItemColor={colors.menuItem}
             selectedMenuItemColor={colors.selectedMenuItem}
-            itemOnHoverColor={colors.itemOnHover}
+            onHoverColor={colors.onHover}
+            sideMenuOpen={sideMenuOpen}
+            subMenuItems={item.subMenuItems}
           />
         ))}
       </MenuItemsContainer>
+      <ToggleButton
+        sideMenuOpen={sideMenuOpen}
+        setSideMenuOpen={setSideMenuOpen}
+        toggleButtonColor={colors.toggleButton}
+      />
     </SideBarContainer>
   );
 };

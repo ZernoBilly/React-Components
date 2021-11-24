@@ -4,7 +4,7 @@ type SingleMenuItemProps = {
   dividerColor: string;
   isSelected: boolean;
   selectedMenuItemColor: string;
-  itemOnHoverColor: string;
+  onHoverColor: string;
 };
 
 type MenuItemTextProps = {
@@ -12,16 +12,23 @@ type MenuItemTextProps = {
   menuItemColor: string;
   isSelected: boolean;
   selectedMenuItemColor: string;
+  onHoverColor: string;
+};
+
+type MenuItemIconProps = {
+  sideMenuOpen: boolean;
 };
 
 export const SingleMenuItem = styled.div<SingleMenuItemProps>`
-  text-align: center;
   display: flex;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: center;
   margin: 0.2rem 1rem;
   position: relative;
   cursor: pointer;
+  overflow: initial;
+  white-space: nowrap;
+  overflow: hidden;
 
   &:hover {
     &:after {
@@ -30,9 +37,7 @@ export const SingleMenuItem = styled.div<SingleMenuItemProps>`
       width: 100%;
       border: 1px solid;
       border-color: ${(props) =>
-        props.isSelected
-          ? props.selectedMenuItemColor
-          : props.itemOnHoverColor};
+        props.isSelected ? props.selectedMenuItemColor : props.onHoverColor};
       bottom: 0;
       transition: 0.2s ease-in-out all;
     }
@@ -57,16 +62,25 @@ export const MenuItemText = styled.p<MenuItemTextProps>`
   font-size: 1.1rem;
   font-weight: 550;
   font-family: ${(props) => props.menuItemFontFamily};
-  color: ${(props) => props.menuItemColor};
+  color: ${(props) =>
+    props.isSelected ? props.selectedMenuItemColor : props.menuItemColor};
   width: 100%;
   height: 100%;
+  transition: 0.2s ease-in-out all;
 
   &:hover {
-    color: ${(props) => props.selectedMenuItemColor};
+    color: ${(props) => !props.isSelected && props.onHoverColor};
     transition: 0.1s ease-in all;
   }
 `;
 
-export const MenuItemIcon = styled.img`
+export const MenuItemIcon = styled.img<MenuItemIconProps>`
+  padding: ${(props) => (!props.sideMenuOpen ? "0.8rem 0rem" : "0rem")};
   height: 2rem;
+`;
+
+export const SubMenuButton = styled.div`
+  height: 1rem;
+  width: 1rem;
+  background-color: red;
 `;

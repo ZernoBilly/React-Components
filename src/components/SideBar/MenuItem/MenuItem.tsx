@@ -1,6 +1,13 @@
-import React, { useState } from "react";
+import React from "react";
 
-import { SingleMenuItem, MenuItemText, MenuItemIcon } from "./styled";
+import SubMenuItem from "./SubMenuItem/SubMenuItem";
+
+import {
+  SingleMenuItem,
+  MenuItemText,
+  MenuItemIcon,
+  SubMenuButton,
+} from "./styled";
 
 interface MenuItemProps<T> {
   menuItem: T;
@@ -10,10 +17,17 @@ interface MenuItemProps<T> {
   dividerColor: string;
   menuItemColor: string;
   selectedMenuItemColor: string;
-  itemOnHoverColor: string;
+  onHoverColor: string;
+  sideMenuOpen: boolean;
+  subMenuItems?: { name: string; to: string }[] | undefined;
 }
 
-const MenuItem = <T extends { name: string; icon: string }>({
+const MenuItem = <
+  T extends {
+    name: string;
+    icon: string;
+  }
+>({
   menuItem,
   menuItemFontFamily,
   selected,
@@ -21,27 +35,38 @@ const MenuItem = <T extends { name: string; icon: string }>({
   dividerColor,
   menuItemColor,
   selectedMenuItemColor,
-  itemOnHoverColor,
+  onHoverColor,
+  sideMenuOpen,
+  subMenuItems = [],
 }: MenuItemProps<T>) => {
   const isSelected = selected === menuItem.name;
+  const hasSubMenuItems = !!subMenuItems.length;
+
+  const onClickHandler = () => {
+    setSelected(menuItem.name);
+  };
 
   return (
     <SingleMenuItem
-      onClick={() => setSelected(menuItem.name)}
+      onClick={() => onClickHandler()}
       dividerColor={dividerColor}
       isSelected={isSelected}
       selectedMenuItemColor={selectedMenuItemColor}
-      itemOnHoverColor={itemOnHoverColor}
+      onHoverColor={onHoverColor}
     >
-      <MenuItemIcon src={menuItem.icon} />
-      <MenuItemText
-        menuItemFontFamily={menuItemFontFamily}
-        menuItemColor={menuItemColor}
-        isSelected={isSelected}
-        selectedMenuItemColor={selectedMenuItemColor}
-      >
-        {menuItem.name}
-      </MenuItemText>
+      <MenuItemIcon src={menuItem.icon} sideMenuOpen={sideMenuOpen} />
+      {sideMenuOpen && (
+        <MenuItemText
+          menuItemFontFamily={menuItemFontFamily}
+          menuItemColor={menuItemColor}
+          isSelected={isSelected}
+          selectedMenuItemColor={selectedMenuItemColor}
+          onHoverColor={onHoverColor}
+        >
+          {menuItem.name}
+        </MenuItemText>
+      )}
+      {hasSubMenuItems && <SubMenuButton></SubMenuButton>}
     </SingleMenuItem>
   );
 };

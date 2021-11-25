@@ -17,9 +17,9 @@ Install types
 
 ## Components
 
-- [SideMenu](#sidemenu)
+- [SideBar](#sidebar)
 
-### SideMenu
+### SideBar
 
 #### Data example
 

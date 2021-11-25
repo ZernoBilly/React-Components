@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import { HomeContainer } from "./styled";
 import SideBar from "../../components/SideBar/SideBar";
@@ -12,16 +12,19 @@ import {
 } from "../../testData/SideMenuTestData";
 
 const Home = () => {
+  const [showSideMenu, setShowSideMenu] = useState<boolean>(true);
   return (
     <HomeContainer>
-      <SideBar
-        bgImage={backgroundImage}
-        headerText={headerText}
-        headerFontFamily={fonts[1]}
-        menuItems={menuItems}
-        menuItemFontFamily={fonts[2]}
-        colors={colors}
-      />
+      {showSideMenu && (
+        <SideBar
+          bgImage={backgroundImage}
+          headerText={headerText}
+          headerFontFamily={fonts[1]}
+          menuItems={menuItems}
+          menuItemFontFamily={fonts[2]}
+          colors={colors}
+        />
+      )}
     </HomeContainer>
   );
 };

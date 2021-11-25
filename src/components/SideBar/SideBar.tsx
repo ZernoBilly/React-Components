@@ -22,6 +22,7 @@ interface ColorsProps {
 }
 
 type SideBarProps = {
+  spacingTop?: string;
   bgImage: string;
   headerText: {
     long: string;
@@ -35,6 +36,7 @@ type SideBarProps = {
 };
 
 const SideBar: React.FC<SideBarProps> = ({
+  spacingTop = "",
   bgImage = "",
   headerText = {},
   headerFontFamily = "",
@@ -45,6 +47,7 @@ const SideBar: React.FC<SideBarProps> = ({
   const [selected, setSelected] = useState(menuItems[0].name);
   const [sideMenuOpen, setSideMenuOpen] = useState(true);
   const [showHeaderText, setShowHeaderText] = useState(headerText.long);
+  const [subMenuOpen, setSubMenuOpen] = useState(false);
 
   //Delay for long header text appearing
   useEffect(() => {
@@ -78,6 +81,7 @@ const SideBar: React.FC<SideBarProps> = ({
       <SideBarHeader
         headerColor={colors.header}
         headerFontFamily={headerFontFamily}
+        spacingTop={spacingTop}
       >
         {showHeaderText}
       </SideBarHeader>
@@ -95,6 +99,8 @@ const SideBar: React.FC<SideBarProps> = ({
             onHoverColor={colors.onHover}
             sideMenuOpen={sideMenuOpen}
             subMenuItems={item.subMenuItems}
+            subMenuOpen={subMenuOpen}
+            setSubMenuOpen={setSubMenuOpen}
           />
         ))}
       </MenuItemsContainer>

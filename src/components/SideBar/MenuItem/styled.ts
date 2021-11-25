@@ -19,6 +19,15 @@ type MenuItemIconProps = {
   sideMenuOpen: boolean;
 };
 
+type SubMenuButtonProps = {
+  subMenuButtonColor: string;
+  isSelected: boolean;
+  selectedMenuItemColor: string;
+  subMenuOpen: boolean;
+};
+
+export const SingleItemContainer = styled.div``;
+
 export const SingleMenuItem = styled.div<SingleMenuItemProps>`
   display: flex;
   align-items: center;
@@ -79,8 +88,18 @@ export const MenuItemIcon = styled.img<MenuItemIconProps>`
   height: 2rem;
 `;
 
-export const SubMenuButton = styled.div`
-  height: 1rem;
-  width: 1rem;
-  background-color: red;
+export const SubMenuButton = styled.div<SubMenuButtonProps>`
+  position: absolute;
+  right: 1rem;
+  height: 0.4rem;
+  width: 0.4rem;
+  border: solid
+    ${(props) =>
+      props.isSelected
+        ? props.selectedMenuItemColor
+        : props.subMenuButtonColor};
+  border-width: 0 2px 2px 0;
+  transform: ${(props) =>
+    props.subMenuOpen ? "rotate(-135deg)" : "rotate(45deg)"};
+  transition: 0.1s ease-in-out color;
 `;

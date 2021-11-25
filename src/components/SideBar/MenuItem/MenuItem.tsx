@@ -3,13 +3,19 @@ import React from "react";
 import SubMenuItem from "./SubMenuItem/SubMenuItem";
 
 import {
+  SingleItemContainer,
   SingleMenuItem,
   MenuItemText,
   MenuItemIcon,
   SubMenuButton,
 } from "./styled";
 
-interface MenuItemProps<T> {
+interface ISubMenuItem {
+  name: string;
+  to: string;
+}
+
+type MenuItemProps<T> = {
   menuItem: T;
   menuItemFontFamily?: string;
   selected: string;
@@ -19,8 +25,10 @@ interface MenuItemProps<T> {
   selectedMenuItemColor: string;
   onHoverColor: string;
   sideMenuOpen: boolean;
-  subMenuItems?: { name: string; to: string }[] | undefined;
-}
+  subMenuItems?: ISubMenuItem[] | undefined;
+  subMenuOpen: boolean;
+  setSubMenuOpen: React.Dispatch<React.SetStateAction<boolean>>;
+};
 
 const MenuItem = <
   T extends {
@@ -38,36 +46,60 @@ const MenuItem = <
   onHoverColor,
   sideMenuOpen,
   subMenuItems = [],
+  subMenuOpen,
+  setSubMenuOpen,
 }: MenuItemProps<T>) => {
   const isSelected = selected === menuItem.name;
   const hasSubMenuItems = !!subMenuItems.length;
 
-  const onClickHandler = () => {
+  const menuItemClickHandler = () => {
     setSelected(menuItem.name);
+
+    hasSubMenuItems ? setSubMenuOpen(!subMenuOpen) : setSubMenuOpen(false);
   };
 
   return (
-    <SingleMenuItem
-      onClick={() => onClickHandler()}
-      dividerColor={dividerColor}
-      isSelected={isSelected}
-      selectedMenuItemColor={selectedMenuItemColor}
-      onHoverColor={onHoverColor}
-    >
-      <MenuItemIcon src={menuItem.icon} sideMenuOpen={sideMenuOpen} />
-      {sideMenuOpen && (
-        <MenuItemText
-          menuItemFontFamily={menuItemFontFamily}
-          menuItemColor={menuItemColor}
-          isSelected={isSelected}
-          selectedMenuItemColor={selectedMenuItemColor}
-          onHoverColor={onHoverColor}
-        >
-          {menuItem.name}
-        </MenuItemText>
-      )}
-      {hasSubMenuItems && <SubMenuButton></SubMenuButton>}
-    </SingleMenuItem>
+    <SingleItemContainer>
+      <SingleMenuItem
+        onClick={() => menuItemClickHandler()}
+        dividerColor={dividerColor}
+        isSelected={isSelected}
+        selectedMenuItemColor={selectedMenuItemColor}
+        onHoverColor={onHoverColor}
+      >
+        <MenuItemIcon src={menuItem.icon} sideMenuOpen={sideMenuOpen} />
+        {sideMenuOpen && (
+          <MenuItemText
+            menuItemFontFamily={menuItemFontFamily}
+            menuItemColor={menuItemColor}
+            isSelected={isSelected}
+            selectedMenuItemColor={selectedMenuItemColor}
+            onHoverColor={onHoverColor}
+          >
+            {menuItem.name}
+          </MenuItemText>
+        )}
+
+        {hasSubMenuItems && sideMenuOpen && (
+          <SubMenuButton
+            subMenuButtonColor={menuItemColor}
+            isSelected={isSelected}
+            selectedMenuItemColor={selectedMenuItemColor}
+            subMenuOpen={subMenuOpen}
+          ></SubMenuButton>
+        )}
+      </SingleMenuItem>
+      {hasSubMenuItems &&
+        sideMenuOpen &&
+        subMenuOpen &&
+        subMenuItems.map((item) => (
+          <SubMenuItem<ISubMenuItem>
+            subMenuItem={item}
+            menuItemColor={menuItemColor}
+            onHoverColor={onHoverColor}
+          />
+        ))}
+    </SingleItemContainer>
   );
 };
 

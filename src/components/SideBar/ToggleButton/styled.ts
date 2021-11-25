@@ -17,7 +17,7 @@ export const ToggleButtonContainer = styled.div<ToggleButtonContainerProps>`
   transform: ${(props) => !props.sideMenuOpen && "rotate(90deg)"};
   transition: 0.3s ease-in-out all;
 
-  @media only screen and (max-width: 700px) {
+  @media only screen and (max-width: 780px) {
     max-width: ${(props) => props.sideMenuOpen && "20%"};
   }
 

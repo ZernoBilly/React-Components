@@ -1,32 +1,7 @@
-import React, { useState } from "react";
-
-import { HomeContainer } from "./styled";
-import SideBar from "../../components/SideBar/SideBar";
-
-import {
-  backgroundImage,
-  headerText,
-  menuItems,
-  fonts,
-  colors,
-} from "../../testData/SideMenuTestData";
+import React from "react";
 
 const Home = () => {
-  const [showSideMenu, setShowSideMenu] = useState<boolean>(true);
-  return (
-    <HomeContainer>
-      {showSideMenu && (
-        <SideBar
-          bgImage={backgroundImage}
-          headerText={headerText}
-          headerFontFamily={fonts[1]}
-          menuItems={menuItems}
-          menuItemFontFamily={fonts[2]}
-          colors={colors}
-        />
-      )}
-    </HomeContainer>
-  );
+  return <p>Home</p>;
 };
 
 export default Home;

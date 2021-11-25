@@ -31,8 +31,8 @@ export const menuItems = [
     subMenuItems: [],
   },
   {
-    name: "Contacts",
-    to: "/contacts",
+    name: "Contact",
+    to: "/contact",
     icon: "/icons/envelope.svg",
     subMenuItems: [],
   },

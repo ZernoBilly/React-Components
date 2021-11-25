@@ -15,7 +15,7 @@ type SideBarHeaderProps = {
 export const SideBarContainer = styled.div<SideBarContainerProps>`
   position: relative;
   width: ${(props) => (props.sideMenuOpen ? "30%" : "5%")};
-  max-width: 20rem;
+  max-width: 30%;
   min-width: 5rem;
   transition: 0.2s ease-in all;
   background-image: linear-gradient(
@@ -28,9 +28,11 @@ export const SideBarContainer = styled.div<SideBarContainerProps>`
   background-repeat: no-repeat;
   background-position: center center;
 
-  @media only screen and (max-width: 700px) {
+  @media only screen and (max-width: 780px) {
+    height: ${(props) => props.sideMenuOpen && "100vh"};
+    position: ${(props) => props.sideMenuOpen && "absolute"};
+    max-width: ${(props) => props.sideMenuOpen && "100%"};
     width: ${(props) => (props.sideMenuOpen ? "100%" : "5%")};
-    max-width: 100vw;
   }
 `;
 

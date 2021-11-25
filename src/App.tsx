@@ -1,11 +1,32 @@
 import React from "react";
 
-import Home from "./pages/Home/Home";
+import { MainContainer } from "./styled";
+
+import SideBar from "./components/SideBar/SideBar";
+import MainSection from "./components/MainSection/MainSection";
+
+import {
+  backgroundImage,
+  headerText,
+  menuItems,
+  fonts,
+  colors,
+} from "./testData/SideMenuTestData";
 
 function App() {
   return (
     <div className="App">
-      <Home />
+      <MainContainer>
+        <SideBar
+          bgImage={backgroundImage}
+          headerText={headerText}
+          headerFontFamily={fonts[1]}
+          menuItems={menuItems}
+          menuItemFontFamily={fonts[2]}
+          colors={colors}
+        />
+        <MainSection />
+      </MainContainer>
     </div>
   );
 }

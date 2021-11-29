@@ -1,5 +1,7 @@
 # React Components
 
+Reusable React components for fullscreen non-scrollable mobile friendly applications
+
 Try components(https://github.com/facebook/create-react-app).
 
 ## Technologies
@@ -14,6 +16,9 @@ Install dependancies
 
 Install types
 `npm install @types/styled-components @types/react-router-dom`
+
+Wrap application in Container div
+` display: flex; width: 100vw; height: 100vh;`
 
 ## Components
 

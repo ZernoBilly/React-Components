@@ -15,7 +15,7 @@ type SideBarHeaderProps = {
 export const SideBarContainer = styled.div<SideBarContainerProps>`
   position: relative;
   width: ${(props) => (props.sideMenuOpen ? "30%" : "5%")};
-  max-width: 30%;
+  max-width: 20rem;
   min-width: 5rem;
   transition: 0.2s ease-in all;
   background-image: linear-gradient(

@@ -2,7 +2,7 @@
 
 Reusable React components for fullscreen non-scrollable mobile friendly applications
 
-Try components(https://github.com/facebook/create-react-app).
+Try components(https://reactcomponents-appi.netlify.app/).
 
 ## Technologies
 
